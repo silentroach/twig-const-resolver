@@ -1,5 +1,5 @@
 {
-  "name": "silent/twig-const/resolver",
+  "name": "silent/twig-const-resolver",
   "description": "Simple Twig plugin to resolve constant on template cache build",
   "type": "library",
   "require": {
