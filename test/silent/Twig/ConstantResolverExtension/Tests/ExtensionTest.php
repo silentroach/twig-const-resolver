@@ -59,6 +59,30 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(ExtensionTest::SOME_EMPTY_VALUE, $node->getNode('expr')->getAttribute('value'));
     }
 
+    public function testNonConstant()
+    {
+        $stream = $this->environment->parse(
+            $this->environment->tokenize('some text', 'index')
+        );
+
+        $node = $stream->getNode('body')->getNode(0);
+        $this->assertInstanceOf(Twig_Node_Text::class, $node);
+    }
+
+    public function testDynamicConstant()
+    {
+        $stream = $this->environment->parse(
+            $this->environment->tokenize('{{ constant("ExtensionTest::SOME" + "_EMPTY_VALUE") }}', 'index')
+        );
+
+        $node = $stream->getNode('body')->getNode(0);
+
+        $this->assertEquals(Twig_Node_Print::class, get_class($node));
+
+        // should be the same
+        $this->assertInstanceOf(Twig_Node_Expression_Binary_Add::class, $node->getNode('expr')->getNode('arguments')->getNode(0));
+    }
+
     /**
      * @expectedException Twig_Error
      * @expectedExceptionMessageRegExp #SOME_UNKNOWN_CONST#
