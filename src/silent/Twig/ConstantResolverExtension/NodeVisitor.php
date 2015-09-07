@@ -12,12 +12,9 @@ class NodeVisitor implements \Twig_NodeVisitorInterface
         if ($node instanceof \Twig_Node_Expression_Function
             && 'constant' === $node->getAttribute('name')
             && 1 === $node->count()
+            && null !== ($resolved = $this->getResolvedConstant($node))
         ) {
-            $resolved = $this->getResolvedConstant($node);
-
-            if ($resolved) {
-                return new \Twig_Node_Expression_Constant($resolved, $node->getLine());
-            }
+            return new \Twig_Node_Expression_Constant($resolved, $node->getLine());
         }
 
         return $node;
