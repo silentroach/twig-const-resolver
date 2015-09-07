@@ -47,7 +47,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException Twig_Error
      * @expectedExceptionMessageRegExp #SOME_UNKNOWN_CONST#
      */
     public function testUnresolved()

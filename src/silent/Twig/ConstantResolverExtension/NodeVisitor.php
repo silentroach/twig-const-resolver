@@ -40,7 +40,8 @@ class NodeVisitor implements \Twig_NodeVisitorInterface
             if ($constNode instanceof \Twig_Node_Expression_Constant
                 && null !== $value = $constNode->getAttribute('value')
             ) {
-                if (null === $constantResolved = constant($value)) {
+                // do not allow E_WARNING to throw
+                if (null === $constantResolved = @constant($value)) {
                     throw new \Twig_Error(
                         sprintf(
                             "Can't resolve constant('%s')",
