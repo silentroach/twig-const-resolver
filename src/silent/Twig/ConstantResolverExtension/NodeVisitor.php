@@ -12,9 +12,9 @@ class NodeVisitor implements \Twig_NodeVisitorInterface
         if ($node instanceof \Twig_Node_Expression_Function
             && 'constant' === $node->getAttribute('name')
             && 1 === $node->count()
-            && null !== ($resolved = $this->getResolvedConstant($node))
+            && null !== ($resolved = $this->resolve($node))
         ) {
-            return new StaticConstantExpression($resolved, $node->getLine());
+            return $this->resolve($node);
         }
 
         return $node;
@@ -25,7 +25,7 @@ class NodeVisitor implements \Twig_NodeVisitorInterface
      * @return mixed
      * @throws \Twig_Error
      */
-    private function getResolvedConstant(\Twig_Node_Expression_Function $node)
+    private function resolve(\Twig_Node_Expression_Function $node)
     {
         $args = $node->getNode('arguments');
 
@@ -37,8 +37,7 @@ class NodeVisitor implements \Twig_NodeVisitorInterface
             if ($constNode instanceof \Twig_Node_Expression_Constant
                 && null !== $value = $constNode->getAttribute('value')
             ) {
-                // do not allow E_WARNING to throw
-                if (null === $constantResolved = @constant($value)) {
+                if (!defined($value)) {
                     throw new \Twig_Error(
                         sprintf(
                             "Can't resolve constant('%s')",
@@ -47,11 +46,11 @@ class NodeVisitor implements \Twig_NodeVisitorInterface
                     );
                 }
 
-                return $value;
+                return new StaticConstantExpression($value, $node->getLine());
             }
         }
 
-        return null;
+        return $node;
     }
 
     /**

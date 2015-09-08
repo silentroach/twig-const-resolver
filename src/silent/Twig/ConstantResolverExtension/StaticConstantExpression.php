@@ -1,11 +1,13 @@
 <?php
+
 namespace silent\Twig\ConstantResolverExtension;
 
-/**
- * Class StaticConstantExpression
- */
 class StaticConstantExpression extends \Twig_Node_Expression
 {
+    /**
+     * @param mixed $expression
+     * @param int $lineno
+     */
     public function __construct($expression, $lineno)
     {
         parent::__construct(array(), array('expression' => $expression), $lineno);
