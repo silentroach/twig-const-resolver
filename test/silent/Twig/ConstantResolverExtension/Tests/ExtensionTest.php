@@ -32,7 +32,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $node = $stream->getNode('body')->getNode(0);
 
         $this->assertEquals(Twig_Node_Print::class, get_class($node));
-        $this->assertEquals(PHP_INT_MAX, $node->getNode('expr')->getAttribute('value'));
+        $this->assertEquals('PHP_INT_MAX', $node->getNode('expr')->getAttribute('expression'));
     }
 
     public function testClassConstant()
@@ -44,7 +44,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $node = $stream->getNode('body')->getNode(0);
 
         $this->assertEquals(Twig_Node_Print::class, get_class($node));
-        $this->assertEquals(ExtensionTest::SOME_VALUE, $node->getNode('expr')->getAttribute('value'));
+        $this->assertEquals('ExtensionTest::SOME_VALUE', $node->getNode('expr')->getAttribute('expression'));
     }
 
     public function testEmptyConstant()
@@ -56,7 +56,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $node = $stream->getNode('body')->getNode(0);
 
         $this->assertEquals(Twig_Node_Print::class, get_class($node));
-        $this->assertEquals(ExtensionTest::SOME_EMPTY_VALUE, $node->getNode('expr')->getAttribute('value'));
+        $this->assertEquals('ExtensionTest::SOME_EMPTY_VALUE', $node->getNode('expr')->getAttribute('expression'));
     }
 
     public function testNonConstant()
