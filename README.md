@@ -17,37 +17,27 @@ For example we have something like this:
 {% endif %}
 ```
 
-Without this extension it will be compiled in something like this:
+Without this extension Twig will compile it in something like this:
 
 ```php
-class __TwigTemplate_long_long_hash extends Twig_Template {
-
-    protected function doDisplay(array $context, array $blocks = array()) {
-        if (((isset($context["usertype"]) ? $context["usertype"] : null) == twig_constant("Users::TYPE_TROLL"))) {
-            // twig_constant will be resolved in runtime
-            echo "Bye-bye";
-        } else {
-            echo "Hello";
-        }
-    }
-
+if (((isset($context["usertype"]) ? $context["usertype"] : null) == twig_constant("Users::TYPE_TROLL"))) {
+    // twig_constant will be evaluated in runtime
+    echo "Bye-bye";
+} else {
+    echo "Hello";
 }
 ```
 
-With this extension it will be compiled in something like this:
+It will be compiled even if you have no constant with that name. So you will get an error in production.
+
+With this extension you will avoid this types of errors cause it will evaluate constants at the build step, so this template will be compiled in something like this:
 
 ```php
-class __TwigTemplate_long_long_hash extends Twig_Template {
-
-    protected function doDisplay(array $context, array $blocks = array()) {
-        if (((isset($context["usertype"]) ? $context["usertype"] : null) == 2)) {
-            // constant is resolved and evaluated (2)
-            echo "Bye-bye";
-        } else {
-            echo "Hello";
-        }
-    }
-
+if (((isset($context["usertype"]) ? $context["usertype"] : null) == 2)) {
+    // constant is evaluated immediately at the build step (2)
+    echo "Bye-bye";
+} else {
+    echo "Hello";
 }
 ```
 
@@ -66,5 +56,7 @@ The extension is installable via composer:
 ## Setup
 
 ```php
-$twig->addExtension(new \silent\Twig\ConstantResolverExtension\Extension());
+$twig->addExtension(
+    new \silent\Twig\ConstantResolverExtension\Extension()
+);
 ```
