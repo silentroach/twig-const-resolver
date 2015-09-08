@@ -33,8 +33,19 @@ It will be compiled even if you have no constant with that name. So you will get
 With this extension you can avoid this types of errors cause it will evaluate constants at the build step, so this template will be compiled in something like this:
 
 ```php
+if (((isset($context["usertype"]) ? $context["usertype"] : null) == Users::TYPE_TROLL)) {
+    // constant is resolved at the build step (Users::TYPE_TROLL)
+    echo "Bye-bye";
+} else {
+    echo "Hello";
+}
+```
+
+Also in evaluation mode it can be compiled in something like this:
+
+```php
 if (((isset($context["usertype"]) ? $context["usertype"] : null) == 2)) {
-    // constant is evaluated immediately at the build step (2)
+    // constant is resolved and evaluated at the build step (Users::TYPE_TROLL => 2)
     echo "Bye-bye";
 } else {
     echo "Hello";
@@ -48,7 +59,7 @@ The extension is installable via composer:
 ```json
 {
     "require": {
-        "silent/twig-const-resolver": "~1.0"
+        "silent/twig-const-resolver": "~1.1"
     }
 }
 ```
@@ -57,6 +68,9 @@ The extension is installable via composer:
 
 ```php
 $twig->addExtension(
+    /**
+     * @param $evaluate bool Evaluate consts (default: false)
+     */
     new \silent\Twig\ConstantResolverExtension\Extension()
 );
 ```

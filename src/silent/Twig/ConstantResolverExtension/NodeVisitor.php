@@ -4,6 +4,16 @@ namespace silent\Twig\ConstantResolverExtension;
 
 class NodeVisitor implements \Twig_NodeVisitorInterface
 {
+    private $evaluate;
+
+    /**
+     * @param bool $evaluate Enable constant evaluation
+     */
+    public function __construct($evaluate)
+    {
+        $this->evaluate = $evaluate;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -46,7 +56,11 @@ class NodeVisitor implements \Twig_NodeVisitorInterface
                     );
                 }
 
-                return new StaticConstantExpression($value, $node->getLine());
+                if ($this->evaluate) {
+                    return new \Twig_Node_Expression_Constant(constant($value), $node->getLine());
+                } else {
+                    return new StaticConstantExpression($value, $node->getLine());
+                }
             }
         }
 

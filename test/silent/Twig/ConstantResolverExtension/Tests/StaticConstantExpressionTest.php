@@ -2,9 +2,6 @@
 
 use \silent\Twig\ConstantResolverExtension\StaticConstantExpression;
 
-/**
- * Class StaticConstantExpressionTest
- */
 class StaticConstantExpressionTest extends \PHPUnit_Framework_TestCase
 {
     const SOME_VALUE = 12345;
