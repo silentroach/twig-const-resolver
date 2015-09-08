@@ -30,7 +30,7 @@ if (((isset($context["usertype"]) ? $context["usertype"] : null) == twig_constan
 
 It will be compiled even if you have no constant with that name. So you will get an error in production.
 
-With this extension you will avoid this types of errors cause it will evaluate constants at the build step, so this template will be compiled in something like this:
+With this extension you can avoid this types of errors cause it will evaluate constants at the build step, so this template will be compiled in something like this:
 
 ```php
 if (((isset($context["usertype"]) ? $context["usertype"] : null) == 2)) {
