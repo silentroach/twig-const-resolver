@@ -14,7 +14,7 @@ class NodeVisitor implements \Twig_NodeVisitorInterface
             && 1 === $node->count()
             && null !== ($resolved = $this->getResolvedConstant($node))
         ) {
-            return new \Twig_Node_Expression_Constant($resolved, $node->getLine());
+            return new StaticConstantExpression($resolved, $node->getLine());
         }
 
         return $node;
@@ -47,7 +47,7 @@ class NodeVisitor implements \Twig_NodeVisitorInterface
                     );
                 }
 
-                return $constantResolved;
+                return $value;
             }
         }
 
