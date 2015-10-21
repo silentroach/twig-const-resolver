@@ -1,5 +1,6 @@
 # Twig Constant Resolver Extension
 
+[![Packagist](https://img.shields.io/packagist/v/silentroach/twig-const-resolver.svg?style=flat-square)](https://packagist.org/packages/silent/twig-const-resolver)
 [![Travis](https://img.shields.io/travis/silentroach/twig-const-resolver.svg?style=flat-square&label=travis)](https://travis-ci.org/silentroach/twig-const-resolver)
 [![Coveralls](https://img.shields.io/coveralls/silentroach/twig-const-resolver.svg?style=flat-square&label=coverage)](https://coveralls.io/r/silentroach/twig-const-resolver)
 
