@@ -1,9 +1,12 @@
 {
   "name": "silent/twig-const-resolver",
   "description": "Simple Twig plugin to resolve constant on template cache build",
+  "keywords": ["twig", "extension", "constant", "templating"],
+  "homepage": "https://github.com/silentroach/twig-const-resolver",
+  "license": "MIT",
   "type": "library",
   "require": {
-    "php": ">=5.5.0",
+    "php": ">=5.6.0",
     "twig/twig": "~1.0"
   },
   "require-dev": {
@@ -14,5 +17,8 @@
     "psr-0": {
       "silent": "src/"
     }
+  },
+  "archive": {
+    "exclude": ["/test", "/phpunit.xml.dist"]
   }
 }
